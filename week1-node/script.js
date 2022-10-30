@@ -1,6 +1,6 @@
 const lodash = require('lodash');
 
-console.log('Moro si');
+console.log('Hejssan vaa');
 
 const a = 'Foo Bar'; //fooBar
 const b = lodash.camelCase(a);
