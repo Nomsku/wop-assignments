@@ -14,6 +14,15 @@ const users = [
   },
 ];
 
+const getUser = (userId) => {
+  for(let user of users){
+    if(userId === user.id){
+      return user;
+    }
+  }
+};
+
 module.exports = {
   users,
+  getUser,
 };
