@@ -154,8 +154,8 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode
 
 # ignore content of uploads folder
-uploads/*
+*/uploads/*
 # except one (empty) file to have the folder in version control
-!uploads/.gitkeep
+!*/uploads/.gitkeep
 
 .env
