@@ -1,15 +1,15 @@
 'use strict';
-const {users, getUser} = require('../models/userModel');
+const {getAllUsers, getUser} = require('../models/userModel');
 
 
-const user_list_get = (req, res) => {
-  res.json(users);
+const user_list_get = async (req, res) => {
+  res.json(await getAllUsers());
 };
 
-const user_get = (req, res) => {
-    const user = getUser(req.params.id);
-    console.log('jäbä', user);
-    res.json(user);
+const user_get = async (req, res) => {
+    const user = await getUser(req.params.id);
+    
+    res.json(user.pop());
 }
 
 const user_post = (req, res) => {
