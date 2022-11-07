@@ -1,5 +1,5 @@
 'use strict';
-const {getAllCats, getCat, addCat, updateCat} = require('../models/catModel');
+const {getAllCats, getCat, addCat, updateCat, deleteCat} = require('../models/catModel');
 
 
 const cat_list_get = async (req, res) => {
@@ -59,9 +59,22 @@ const cat_post = async (req, res) => {
   }
 };
 
+const cat_delete = async (req, res) => {
+  const result = await deleteCat(req.params.id);
+  if(result.affectedRows > 0) {
+  res.json({
+    message: 'cat deleted',
+    cat_id: result.insertId,
+  });
+  } else {
+  res.send('error')
+  }
+};
+
 module.exports = {
   cat_list_get,
   cat_get,
   cat_post,
   cat_update_put,
+  cat_delete,
 };
