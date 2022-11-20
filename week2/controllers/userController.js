@@ -109,10 +109,19 @@ const user_delete = async (req, res, next) => {
   }
 };
 
+const check_token = (req, res, next) => {
+  if (!req.user) {
+    next(new Error('token not valid'));
+  } else {
+    res.json({ user: req.user });
+  }
+ };
+
 module.exports = {
   user_list_get,
   user_get,
   user_put,
   user_delete,
   user_post,
+  check_token,
 };

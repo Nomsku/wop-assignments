@@ -14,15 +14,10 @@ router.route('/').
         body('birthdate').isDate(),
         body('weight').isNumeric(),
         body('owner').isNumeric(),
-        cat_post).
-    put(body('name').isLength({min: 1}).escape(),
-        body('birthdate').isDate(),
-        body('weight').isNumeric(),
-        body('owner').isNumeric(),
-        body('id').isNumeric(),
-        cat_update_put);
+        cat_post);
+    
 
-router.route('/:id').get(cat_get).delete(cat_delete);
+router.route('/:id').get(cat_get).delete(cat_delete).put(body("name").isLength({ min: 1 }).escape(), body('birthdate').isDate(), body('weight').isNumeric(), cat_update_put);;
   
   
   
