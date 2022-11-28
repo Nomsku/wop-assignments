@@ -1,11 +1,11 @@
 'use strict';
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
-const { getUserLogin } = require('../models/userModel');
-const passportJWT = require("passport-jwt");
+const {getUserLogin} = require('../models/userModel');
+const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
-
 
 // local strategy for username password login
 passport.use(new Strategy(
@@ -17,9 +17,10 @@ passport.use(new Strategy(
         if (user === undefined) {
           return done(null, false, {message: 'Incorrect email.'});
         }
-        if (user.password !== password) {
+        if (!bcrypt.compareSync(password, user.password)) {
           return done(null, false, {message: 'Incorrect password.'});
         }
+        delete user.password;
         return done(null, {...user}, {message: 'Logged In Successfully'}); // use spread syntax to create shallow copy to get rid of binary row type
       } catch (err) {
         return done(err);
@@ -27,16 +28,15 @@ passport.use(new Strategy(
     }));
 
 // TODO: JWT strategy for handling bearer token
-passport.use(
-    new JWTStrategy({
+passport.use(new JWTStrategy(
+    {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "rfvbhujk",
+      secretOrKey: 'tw34y5ktugijl',
     }, (jwtPayload, done) => {
-      console.log('JWTStrategy ', jwtPayload);
-      done(null, jwtPayload)
-    })
-  );
-// consider .env for secret, e.g. secretOrKey: process.env.JWT_SECRET
+      console.log('JWTStrategy', jwtPayload);
+      done(null, jwtPayload);
+    }));
 
+// consider .env for secret, e.g. secretOrKey: process.env.JWT_SECRET
 
 module.exports = passport;
